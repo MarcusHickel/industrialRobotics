@@ -2,4 +2,11 @@
 2. Grab Satellite (Moving or not moving?)
 3. Move satellite into position
 4. Perfom operation on satellite (unscrew bolts and remove panel?)
+4a. Remove Bolt A
+4b. Remove Bolt B
+4c. Remove panel 
 5. Reattach pannel and screw in bolts
+5a. Place pannel
+5b. Attach Bolt A
+5c. Attach Bolt B
+6. Release satellite
