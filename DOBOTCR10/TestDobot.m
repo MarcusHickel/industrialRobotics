@@ -1,7 +1,5 @@
-function Lab3Starter()
-%% Lab3Starter Create a Puma 560 DH SerialLink Model
-% Although there is a Puma 560 Model in the toolbox, this code creates a model 
-% from the basic DH parameters that we derived in the previous theory exercise.  
+function TestDobot()
+% from the basic DH parameters that we derive, create model of robot.  
 
 
 % Link('theta',__,'d',__,'a',__,'alpha',__,'offset',__,'qlim',[ ... ])
