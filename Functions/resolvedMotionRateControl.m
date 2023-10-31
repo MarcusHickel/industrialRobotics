@@ -1,9 +1,12 @@
-function [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,steps,deltaT,lambda)
+function [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,q0,steps,deltaT,lambda)
 %RMRC Resolved Motion Rate Control, Calculates a matrix of q values between 
 % two transforms that results in a linear path will only work with 6dof
 % inlcudes DLS 
 
 % This assigns a default value if none was given
+if exist('q0','var') == 0
+    q0 = zeros(1,6); % For DLS, smaller = more accurate 
+end
 if exist('steps','var') == 0
     steps = 50; % Leaving these as default for nw
 end
@@ -31,7 +34,7 @@ s = lspb(0,1,steps); % Create interpolation scalar
 qMatrix = nan(steps,6); % Allocate Memory
 
 
-qMatrix(1,:) = robot.model.ikcon(T1, zeros(1,6)); % Solve for joint angles
+qMatrix(1,:) = robot.model.ikcon(T1, q0); % Solve for joint angles
 
 % Solve velocitities via RMRC
     for i = 1:steps-1
