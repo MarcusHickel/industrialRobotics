@@ -1,6 +1,6 @@
 function [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,q0,steps,deltaT,lambda)
 %RMRC Resolved Motion Rate Control, Calculates a matrix of q values between 
-% two transforms that results in a linear path will only work with 6dof
+% two transforms that results in a linear path. Will only work with 6dof
 % inlcudes DLS 
 
 % This assigns a default value if none was given
@@ -17,7 +17,7 @@ if exist('lambda','var') == 0
     lambda = 0.001; % For DLS, smaller = more accurate 
 end
 
-
+% Remapping transform in SE3
 T1 = transl(tr1(1),tr1(2),tr1(3)) ...
      * trotx(tr1(4)) ...
      * troty(tr1(5)) ...
@@ -32,16 +32,16 @@ s = lspb(0,1,steps); % Create interpolation scalar
 
 
 qMatrix = nan(steps,6); % Allocate Memory
+xdot = nan(6,steps-1);
 
-
-qMatrix(1,:) = robot.model.ikcon(T1, q0); % Solve for joint angles
+qMatrix(1,:) = robot.model.ikcon(T1, q0); % Solve for inital joint angles
 
 % Solve velocitities via RMRC
     for i = 1:steps-1
-        xdot = (x(:,i+1) - x(:,i))/deltaT;              % Calculate velocity at discrete time step
+        xdot(:,i) = (x(:,i+1) - x(:,i))/deltaT;         % Calculate velocity at discrete time step
         J = robot.model.jacob0(qMatrix(i,:));           % Get the Jacobian at the current state
         dls = pinv(J.'*J + lambda*eye(6))*J';           % Calculate DLS
-        qdot = dls*xdot;                                
+        qdot = dls*xdot(:,i);                                
         qMatrix(i+1,:) =  qMatrix(i,:) + deltaT*qdot';  % Update next joint state
     end
 
