@@ -2,6 +2,10 @@ function [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,q0,steps,delt
 %RMRC Resolved Motion Rate Control, Calculates a matrix of q values between 
 % two transforms that results in a linear path. Will only work with 6dof
 % inlcudes DLS 
+% robot = robotclass
+% tr1 = SE3
+% q = inital q value
+% steps = 
 
 % This assigns a default value if none was given
 if exist('q0','var') == 0
@@ -17,12 +21,12 @@ if exist('lambda','var') == 0
     lambda = 0.001; % For DLS, smaller = more accurate 
 end
 
-% Remapping transform in SE3
-T1 = transl(tr1(1),tr1(2),tr1(3)) ...
-     * trotx(tr1(4)) ...
-     * troty(tr1(5)) ...
-     * trotz(tr1(6)); 
 
+T1 = tr1; 
+
+% Remapping SE3 to trajectory
+tr1 = [tr1.t' tr1.torpy];
+tr2 = [tr2.t' tr2.torpy];
 
 x = zeros(6,steps);  % Allocating memory
 s = lspb(0,1,steps); % Create interpolation scalar
