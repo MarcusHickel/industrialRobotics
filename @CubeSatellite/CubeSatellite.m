@@ -11,10 +11,10 @@ classdef CubeSatellite < handle
         function self = CubeSatellite()
             self.model = self.GetModel('cubesatA');
             basePose = eye(4);
-            self.model.base = basePose;
-                
+            self.model.base = basePose; % Sets position to 0,0,0
+            self.model.delay = 0; %So everything doesnt run slow    
             % Plot 3D model
-            plot3d(self.model,0,'workspace',[-2 2 -2 2 -2 2]);
+            plot3d(self.model,0,'workspace',[-2 2 -2 2 -2 2],'notiles');
 
         end
         
