@@ -13,8 +13,8 @@ classdef DobotCR10 < RobotBaseClass
 				baseTr = eye(4);				
             end
             self.model.base = self.model.base.T * baseTr * trotx(pi/2) * troty(pi/2);
-            
-            self.PlotAndColourRobot();         
+            self.model.delay = 0; 
+%           self.PlotAndColourRobot(); Temp, uncomment when model is made   
         end
 
 %% Create the robot model
