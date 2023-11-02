@@ -1,16 +1,18 @@
-% Find transform of cubeSat
-cubeSat.model.base
-% calcuate screw positions basted on cubesat pos
-% Screws are 50mm apart and mirrored 
-% Find transforms of screw holding positions
-% Calcuate 
-% Waypoint mission:
-% 1. Hover over ScrewA
-% 2. Move on ScrewA
-% 3. Grab ScrewA (Gripper)
-% 4. Unscrew ScrewA
-% 5. Hover over ScrewA Position
-% 6. Move to Holding position
-% 7. Screw into holding position
-% Repeat 1-7 for Screw B
-% Repeat 1-8 in reverse
+qMatrix = FunOperateOnSatellite;
+
+
+j = 1;
+%Animate
+tic;
+for i = 1:size(qMatrix,1)
+    if rem(i,50) == 0
+
+        text = sprintf('Waypoint %d (%d) %0.2fs', j, i, toc);
+        disp(text)
+        j = j+1;
+    end
+    robotUR3.model.animate(qMatrix(i,:));
+
+    pause(.01);
+
+end
