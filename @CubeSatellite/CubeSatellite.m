@@ -4,6 +4,7 @@ classdef CubeSatellite < handle
     
     properties
         model;
+        workspaceDimensions;
     end
     
  methods
@@ -14,7 +15,11 @@ classdef CubeSatellite < handle
             self.model.base = basePose; % Sets position to 0,0,0
             self.model.delay = 0; %So everything doesnt run slow    
             % Plot 3D model
-            plot3d(self.model,0,'workspace',[-2 2 -2 2 -2 2],'notiles');
+            self.workspaceDimensions = [-0.1, 0.1 ...
+                                       ,-0.1, 0.1 ...
+                                       , -0.1  , 0.1];
+            % Plot 3D model
+            plot3d(self.model,0,'workspace',self.workspaceDimensions,'view',[-30,30],'delay',0,'noarrow','nowrist','notiles');;
 
         end
         
