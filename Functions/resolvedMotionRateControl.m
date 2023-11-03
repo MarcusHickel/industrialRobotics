@@ -5,9 +5,8 @@ function [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,q0,steps,delt
 % [qMatrix, xdot] = resolvedMotionRateControl(robot,tr1,tr2,q0,steps,deltaT,lambda)
 % robot = robotclass
 % tr1 = SE3
-% q = inital q value
+% q0 = inital q value
 % steps = number of steps
-% 
 
 % This assigns a default value if none was given
 if exist('q0','var') == 0
